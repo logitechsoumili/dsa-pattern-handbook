@@ -59,6 +59,16 @@ def variable_window_template(arr, constraint_val):
     return result
 ```
 
+### Character Replacement Variant
+
+The window remains valid while:
+```python
+windowLen - maxFreq <= k
+```
+- `maxFreq` represents the frequency of the most common character in the current sliding-window history.
+- The remaining characters are the ones that would need replacement.
+- If replacements required exceed `k`, shrink from the left until the window becomes valid again.
+
 ## Common Variations
 
 - **Fixed-Size Window:** The window size remains exactly `k` (e.g., Max Sum Subarray of Size K).
@@ -82,6 +92,7 @@ def variable_window_template(arr, constraint_val):
 | 3 | [Longest Substring with K Uniques](./03_longest_substring_with_k_uniques) ([Notes](./03_longest_substring_with_k_uniques/notes.md)) | Track window validity based on unique map size and delete keys at zero frequency. |
 | 4 | [Fruit Into Baskets](./04_fruit_into_baskets) ([Notes](./04_fruit_into_baskets/notes.md)) | Map dynamic story constraints to a maximum subarray containing at most 2 distinct types. |
 | 5 | [Longest Substring Without Repeating Characters](./05_longest_substring_without_repeating_characters) ([Notes](./05_longest_substring_without_repeating_characters/notes.md)) | Compare window size to map size to detect duplicate characters mathematically. |
+| 6 | [Longest Repeating Character Replacement](./06_longest_repeating_character_replacement) ([Notes](./06_longest_repeating_character_replacement/notes.md)) | Use frequency counts and the formula `windowLen - maxFreq` to determine how many replacements are needed inside the current window. |
 
 ## Common Mistakes
 
