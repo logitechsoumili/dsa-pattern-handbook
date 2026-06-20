@@ -1,8 +1,11 @@
 # Data Structures and Algorithms Practice
 
 [![Python](https://img.shields.io/badge/Language-Python-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
-[![Problems Solved](https://img.shields.io/badge/Problems_Solved-15-4CAF50?style=flat-square)](#pattern-index)
+[![Java](https://img.shields.io/badge/Language-Java-ED8B00?style=flat-square&logo=java&logoColor=white)](https://www.oracle.com/java/)
+[![C](https://img.shields.io/badge/Language-C-A8B9CC?style=flat-square&logo=c&logoColor=white)](https://en.cppreference.com/w/c)
 [![Status](https://img.shields.io/badge/Status-Active-success?style=flat-square)](#)
+[![LeetCode](https://img.shields.io/badge/Platform-LeetCode-FFA116?style=flat-square&logo=leetcode&logoColor=white)](https://leetcode.com/u/logitechsoumili)
+[![GeeksforGeeks](https://img.shields.io/badge/Platform-GeeksforGeeks-2F8D46?style=flat-square&logo=geeksforgeeks&logoColor=white)](https://www.geeksforgeeks.org/user/logitechsoumili)
 
 This repository contains my solutions, notes, and pattern-based learning resources for Data Structures and Algorithms (DSA) interview preparation.
 
