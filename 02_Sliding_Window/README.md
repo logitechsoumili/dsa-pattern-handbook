@@ -69,6 +69,17 @@ windowLen - maxFreq <= k
 - The remaining characters are the ones that would need replacement.
 - If replacements required exceed `k`, shrink from the left until the window becomes valid again.
 
+### Binary Window Variant
+
+Some sliding window problems involve binary arrays. Instead of maintaining a frequency map, we can directly track the count of the "bad" value.
+
+The window remains valid while:
+```python
+zeroCount <= k
+```
+- `zeroCount` represents the count of the bad value (e.g., zeros) inside the current window.
+- If `zeroCount > k`, the window becomes invalid and must be shrunk from the left.
+
 ## Common Variations
 
 - **Fixed-Size Window:** The window size remains exactly `k` (e.g., Max Sum Subarray of Size K).
@@ -93,6 +104,7 @@ windowLen - maxFreq <= k
 | 4 | [Fruit Into Baskets](./04_fruit_into_baskets) ([Notes](./04_fruit_into_baskets/notes.md)) | Map dynamic story constraints to a maximum subarray containing at most 2 distinct types. |
 | 5 | [Longest Substring Without Repeating Characters](./05_longest_substring_without_repeating_characters) ([Notes](./05_longest_substring_without_repeating_characters/notes.md)) | Compare window size to map size to detect duplicate characters mathematically. |
 | 6 | [Longest Repeating Character Replacement](./06_longest_repeating_character_replacement) ([Notes](./06_longest_repeating_character_replacement/notes.md)) | Use frequency counts and the formula `windowLen - maxFreq` to determine how many replacements are needed inside the current window. |
+| 7 | [Max Consecutive Ones III](./07_max_consecutive_ones_III) ([Notes](./07_max_consecutive_ones_III/notes.md)) | Binary-array variant of Character Replacement. Track zeros inside the window and shrink when `zeroCount > k`. |
 
 ## Common Mistakes
 
