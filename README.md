@@ -8,6 +8,13 @@
 
 A structured handbook of Data Structures and Algorithms patterns, containing problem solutions, detailed notes, brute-force and optimized approaches, templates, common mistakes, and interview-focused insights.
 
+## Learning Roadmap
+
+This handbook follows a structured DSA roadmap organized by patterns to build problem-solving intuition and interview readiness. Problems are solved, documented, and organized according to the roadmap sequence. 
+
+The complete tracking sheet can be viewed below:
+* [DSA Roadmap Tracking Sheet](https://docs.google.com/spreadsheets/d/1T5-nGsJ9WNwna44e9WWRD0jlZIT5KxVOGvylcvvVrY8/edit?usp=sharing)
+
 ## Repository Structure
 
 Each pattern is organized into its own directory. Every problem contains:
