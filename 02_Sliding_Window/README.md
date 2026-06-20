@@ -105,6 +105,14 @@ zeroCount <= k
 | 5 | [Longest Substring Without Repeating Characters](./05_longest_substring_without_repeating_characters) ([Notes](./05_longest_substring_without_repeating_characters/notes.md)) | Compare window size to map size to detect duplicate characters mathematically. |
 | 6 | [Longest Repeating Character Replacement](./06_longest_repeating_character_replacement) ([Notes](./06_longest_repeating_character_replacement/notes.md)) | Use frequency counts and the formula `windowLen - maxFreq` to determine how many replacements are needed inside the current window. |
 | 7 | [Max Consecutive Ones III](./07_max_consecutive_ones_III) ([Notes](./07_max_consecutive_ones_III/notes.md)) | Binary-array variant of Character Replacement. Track zeros inside the window and shrink when `zeroCount > k`. |
+| 8 | [Minimum Window Substring](./08_minimum_window_substring) ([Notes](./08_minimum_window_substring/notes.md)) | Introduces frequency-requirement tracking using need, window, formed, and required to find the smallest valid window. |
+
+### Advanced Sliding Window
+
+Minimum Window Substring is a classic example of an advanced sliding window problem. It is significantly more challenging than standard variable-size sliding window problems because:
+- **Complex Validity Constraints:** Standard problems typically check a simple condition (like sum or count of a single element). Here, the window is only valid when it satisfies a multi-character frequency constraint.
+- **Frequency Matching using Two Hash Maps:** We use one hash map (`need`) for target frequencies and another (`window`) for current window frequencies to track multi-character state.
+- **Satisfied Requirements (`formed == required`):** To avoid comparing entire maps in $O(\text{alphabet size})$ time, we track the number of unique characters that have met their frequency requirement using a `formed` count. The window is valid only when `formed == required` (where `required = len(need)`), reducing the validity check to $O(1)$ time.
 
 ## Common Mistakes
 
