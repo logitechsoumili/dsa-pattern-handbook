@@ -1,4 +1,4 @@
-# Segregate 0s and 1s
+<h2><a href="https://www.geeksforgeeks.org/problems/segregate-0s-and-1s5106/1">Segregate 0s and 1s</a></h2> <img src='https://img.shields.io/badge/Difficulty-Easy-brightgreen' alt='Difficulty: Easy' />
 
 ## Problem Summary
 

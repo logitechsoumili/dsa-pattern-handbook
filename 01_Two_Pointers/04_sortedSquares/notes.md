@@ -1,4 +1,4 @@
-# Squares of a Sorted Array
+<h2><a href="https://leetcode.com/problems/squares-of-a-sorted-array/">Squares of a Sorted Array</a></h2> <img src='https://img.shields.io/badge/Difficulty-Easy-brightgreen' alt='Difficulty: Easy' />
 
 ## Problem Summary
 

@@ -1,4 +1,4 @@
-# Triplets with Smaller Sum
+<h2><a href="https://www.geeksforgeeks.org/problems/count-triplets-with-sum-smaller-than-x5549/1">Triplets with Smaller Sum</a></h2> <img src='https://img.shields.io/badge/Difficulty-Medium-orange' alt='Difficulty: Medium' />
 
 ## Problem Summary
 

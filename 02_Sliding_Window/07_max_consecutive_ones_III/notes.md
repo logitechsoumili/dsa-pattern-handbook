@@ -1,4 +1,4 @@
-# Max Consecutive Ones III
+<h2><a href="https://leetcode.com/problems/max-consecutive-ones-iii/">Max Consecutive Ones III</a></h2> <img src='https://img.shields.io/badge/Difficulty-Medium-orange' alt='Difficulty: Medium' />
 
 ## Problem Statement
 

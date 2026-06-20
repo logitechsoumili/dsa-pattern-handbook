@@ -1,4 +1,4 @@
-# Fruit Into Baskets
+<h2><a href="https://leetcode.com/problems/fruit-into-baskets/">Fruit Into Baskets</a></h2> <img src='https://img.shields.io/badge/Difficulty-Medium-orange' alt='Difficulty: Medium' />
 
 ## Problem Summary
 

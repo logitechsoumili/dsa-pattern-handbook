@@ -1,4 +1,4 @@
-# Remove Duplicates from Sorted Array
+<h2><a href="https://leetcode.com/problems/remove-duplicates-from-sorted-array/">Remove Duplicates from Sorted Array</a></h2> <img src='https://img.shields.io/badge/Difficulty-Easy-brightgreen' alt='Difficulty: Easy' />
 
 ## Problem Summary
 

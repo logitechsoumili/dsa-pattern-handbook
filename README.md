@@ -1,11 +1,10 @@
 # Data Structures and Algorithms Practice
 
-[![LeetCode](https://img.shields.io/badge/Platform-LeetCode-FFA116?style=flat-square&logo=leetcode&logoColor=white)](https://leetcode.com/u/logitechsoumili)
-[![GeeksforGeeks](https://img.shields.io/badge/Platform-GeeksforGeeks-2F8D46?style=flat-square&logo=geeksforgeeks&logoColor=white)](https://www.geeksforgeeks.org/user/logitechsoumili)
-[![Python](https://img.shields.io/badge/Language-Python-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
-[![Java](https://img.shields.io/badge/Language-Java-ED8B00?style=flat-square&logo=java&logoColor=white)](https://www.oracle.com/java/)
-[![C](https://img.shields.io/badge/Language-C-A8B9CC?style=flat-square&logo=c&logoColor=white)](https://en.cppreference.com/w/c)
-[![Status](https://img.shields.io/badge/Status-Active-success?style=flat-square)](#)
+<a href="https://leetcode.com/u/logitechsoumili"><img src="https://img.shields.io/badge/Platform-LeetCode-FFA116?logo=leetcode&logoColor=white" alt="LeetCode" /></a>
+<a href="https://www.geeksforgeeks.org/user/logitechsoumili"><img src="https://img.shields.io/badge/Platform-GeeksforGeeks-2F8D46?logo=geeksforgeeks&logoColor=white" alt="GeeksforGeeks" /></a>
+<a href="https://www.python.org/"><img src="https://img.shields.io/badge/Language-Python-3776AB?logo=python&logoColor=white" alt="Python" /></a>
+<a href="https://www.oracle.com/java/"><img src="https://img.shields.io/badge/Language-Java-ED8B00?logo=java&logoColor=white" alt="Java" /></a>
+<a href="https://en.cppreference.com/w/c"><img src="https://img.shields.io/badge/Language-C-A8B9CC?logo=c&logoColor=white" alt="C" /></a>
 
 This repository contains my solutions, notes, and pattern-based learning resources for Data Structures and Algorithms (DSA) interview preparation.
 
