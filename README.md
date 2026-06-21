@@ -61,6 +61,10 @@ The Two Pointers pattern uses two indices to traverse a linear data structure ef
 
 The Sliding Window pattern is used for problems involving contiguous subarrays or substrings. By maintaining a dynamic window and updating it incrementally, it avoids redundant computations and often reduces quadratic solutions to linear time.
 
+### [3. Slow & Fast Pointers](./03_Slow_Fast_Pointers/README.md)
+
+The Slow & Fast Pointers pattern (also known as Floyd's Cycle Detection Algorithm) uses two pointers moving at different speeds to traverse a linear or cyclic structure. It is commonly applied to cycle detection in linked lists, finding loop entry points, determining midpoints, and solving cyclic mapping problems in arrays.
+
 ## Learning Approach
 
 Mastering algorithms requires a systematic, workflow-oriented approach. For every problem in this handbook, we follow these steps:
