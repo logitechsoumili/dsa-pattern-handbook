@@ -66,6 +66,11 @@ Use the Dutch National Flag algorithm with three pointers: `low` (boundary of 0s
 - If `nums[mid] == 1`: Increment `mid`.
 - If `nums[mid] == 2`: Swap `nums[mid]` and `nums[high]`, then decrement `high`. Do *not* increment `mid` because the swapped element from `high` is unexplored and needs to be evaluated.
 
+- Key idea: Maintain four dynamic subregions in a single pass using three pointers.
+- Why it works: Swapping with `low` brings a known 0 or 1 to `mid`, so both can move forward. Swapping with `high` brings an unknown element to `mid`, requiring re-evaluation.
+
+## Python Solution (Reference)
+
 ```python
 class Solution:
     def sortColors(self, nums: list[int]) -> None:
@@ -85,8 +90,32 @@ class Solution:
                 high -= 1
 ```
 
-- Key idea: Maintain four dynamic subregions in a single pass using three pointers.
-- Why it works: Swapping with `low` brings a known 0 or 1 to `mid`, so both can move forward. Swapping with `high` brings an unknown element to `mid`, requiring re-evaluation.
+## C++ Solution (Primary)
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        int low = 0, mid = 0, high = nums.size() - 1;
+
+        while (mid <= high){
+            if (nums[mid] == 0){
+                swap(nums[mid], nums[low]);
+                low++;
+                mid++;
+            }
+            else if (nums[mid] == 1) mid++;
+            else{
+                swap(nums[mid], nums[high]);
+                high--;
+            }
+        }
+    }
+};
+```
 
 ## Pattern Recognition
 

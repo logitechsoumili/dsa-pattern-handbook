@@ -42,6 +42,11 @@ def better(arr, target):
 
 Use a two-pointer technique with one pointer at the start and one at the end of the array. Sum the elements at both pointers. If the sum is equal to the target, return the indices. If the sum is less than the target, move the left pointer rightward to increase the sum. If the sum is greater than the target, move the right pointer leftward to decrease the sum.
 
+- Key idea: Leverage the sorted nature of the array to eliminate search space dynamically.
+- Why it works: Since the array is sorted, incrementing the left pointer guarantees a sum that is greater than or equal to the previous sum, and decrementing the right pointer guarantees a sum that is less than or equal to the previous sum.
+
+## Python Solution (Reference)
+
 ```python
 def optimised(arr, target):
     i, j = 0, len(arr) - 1
@@ -56,8 +61,33 @@ def optimised(arr, target):
     return None
 ```
 
-- Key idea: Leverage the sorted nature of the array to eliminate search space dynamically.
-- Why it works: Since the array is sorted, incrementing the left pointer guarantees a sum that is greater than or equal to the previous sum, and decrementing the right pointer guarantees a sum that is less than or equal to the previous sum.
+## C++ Solution (Primary)
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& numbers, int target) {
+        int left = 0, right = numbers.size() - 1;
+
+        while (left < right){
+            int res = numbers[left] + numbers[right];
+            if (res == target){
+                return {left+1, right+1};
+            }
+            else if (res < target){
+                left++;
+            }
+            else{
+                right--;
+            }
+        }
+        return {0,0};
+    }
+};
+```
 
 ## Pattern Recognition
 

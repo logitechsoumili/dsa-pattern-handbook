@@ -26,6 +26,11 @@ def moveZeroes_bruteforce(nums):
 
 Use two pointers: a write pointer `curr` (initialized to 0) which tracks the position where the next non-zero element should be placed, and a read pointer `nxt` which scans the array from left to right. When a non-zero element is found at `nums[nxt]`, swap `nums[curr]` and `nums[nxt]`, and then increment `curr`.
 
+- Key idea: Use swaps to push zeros backward and keep non-zero elements in their relative order.
+- Why it works: At any point in the iteration, elements before `curr` are guaranteed to be non-zero in their correct relative order. Swapping ensures that non-zero elements move forward and zeros naturally float to the end.
+
+## Python Solution (Reference)
+
 ```python
 class Solution:
     def moveZeroes(self, nums: list[int]) -> None:
@@ -37,8 +42,25 @@ class Solution:
                 curr += 1
 ```
 
-- Key idea: Use swaps to push zeros backward and keep non-zero elements in their relative order.
-- Why it works: At any point in the iteration, elements before `curr` are guaranteed to be non-zero in their correct relative order. Swapping ensures that non-zero elements move forward and zeros naturally float to the end.
+## C++ Solution (Primary)
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        int slow = 0;
+        for (int fast = 0; fast < nums.size(); fast++){
+            if (nums[fast] != 0){
+                swap(nums[slow], nums[fast]);
+                slow++;
+            }
+        }
+    }
+};
+```
 
 ## Pattern Recognition
 

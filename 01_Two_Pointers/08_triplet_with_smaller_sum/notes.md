@@ -27,6 +27,11 @@ def countTriplets_bruteforce(arr, sum_val):
 
 Sort the array first. Iterate through the array, fixing the first element `arr[i]`. Use two pointers (`left = i + 1`, `right = len(arr) - 1`) to find pairs. If `arr[i] + arr[left] + arr[right] < sum`, then because the array is sorted, any element at index `k` where `left < k <= right` will also form a valid triplet with `arr[i]` and `arr[left]`. Thus, we can count all `right - left` valid triplets at once and increment `left` to search for larger values. If the sum is greater than or equal to `sum`, decrement `right` to reduce the sum.
 
+- Key idea: Use the sorted property of the array to count multiple valid triplets in constant time.
+- Why it works: For a fixed `arr[i]` and `arr[left]`, if the largest possible third element `arr[right]` yields a sum less than target, all elements between `left` and `right` are guaranteed to yield sums less than target because they are smaller than or equal to `arr[right]`.
+
+## Python Solution (Reference)
+
 ```python
 class Solution:
     def countTriplets(self, sum, arr):
@@ -49,8 +54,37 @@ class Solution:
         return ans
 ```
 
-- Key idea: Use the sorted property of the array to count multiple valid triplets in constant time.
-- Why it works: For a fixed `arr[i]` and `arr[left]`, if the largest possible third element `arr[right]` yields a sum less than target, all elements between `left` and `right` are guaranteed to yield sums less than target because they are smaller than or equal to `arr[right]`.
+## C++ Solution (Primary)
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+
+class Solution {
+  public:
+    int countTriplets(int sum, vector<int>& arr) {
+        sort(arr.begin(), arr.end());
+        
+        int count = 0;
+        
+        for (int i = 0; i < arr.size() - 2; i++){
+            int left = i + 1;
+            int right = arr.size() - 1;
+            
+            while (left < right){
+                int currentSum = arr[i] + arr[left] + arr[right];
+                
+                if (currentSum < sum){
+                    count += (right - left);
+                    left++;
+                }
+                else right--;
+            }
+        }
+        return count;
+    }
+};
+```
 
 ## Pattern Recognition
 

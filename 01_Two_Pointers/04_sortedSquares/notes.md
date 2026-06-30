@@ -72,6 +72,11 @@ def sortedSquares_merge(arr):
 
 Use a two-pointer approach starting from the ends of the array. Compare the absolute values or squares of the elements at the left and right pointers. Append the larger square to the result, and move the corresponding pointer inward. Since the largest squares are processed first, reverse the final result to obtain non-decreasing order.
 
+- Key idea: The largest squared values in a sorted array containing negative numbers will always reside at either the extreme left (large negative values) or extreme right (large positive values).
+- Why it works: Comparing the ends allows us to identify the largest squared values sequentially in O(n) time without sorting.
+
+## Python Solution (Reference)
+
 ```python
 def sortedSquares_twoPointer(arr):
     res = []
@@ -87,8 +92,37 @@ def sortedSquares_twoPointer(arr):
     return res[::-1]
 ```
 
-- Key idea: The largest squared values in a sorted array containing negative numbers will always reside at either the extreme left (large negative values) or extreme right (large positive values).
-- Why it works: Comparing the ends allows us to identify the largest squared values sequentially in O(n) time without sorting.
+## C++ Solution (Primary)
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    vector<int> sortedSquares(vector<int>& nums) {
+        vector<int> res(nums.size());
+        int pos = nums.size() - 1;
+        int left = 0, right = nums.size() - 1;
+
+        while (left <= right){
+            int a = nums[left] * nums[left];
+            int b = nums[right] * nums[right];
+
+            if (a > b){
+                res[pos--] = a;
+                left++;
+            }
+            else{
+                res[pos--] = b;
+                right--;
+            }
+        }
+
+        return res;
+    }
+};
+```
 
 ## Pattern Recognition
 

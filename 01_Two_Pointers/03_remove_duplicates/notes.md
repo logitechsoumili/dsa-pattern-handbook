@@ -26,6 +26,11 @@ def removeDuplicates_bruteforce(nums):
 
 Since the array is already sorted, all duplicates are adjacent. We can use a two-pointer technique: a write pointer `k` initialized to 1 and a read pointer `i` traversing from 1 to the end. Whenever `nums[i]` is different from `nums[i-1]`, we write `nums[i]` to `nums[k]` and increment `k`.
 
+- Key idea: Use the sorted property to check adjacent elements and maintain a write boundary.
+- Why it works: The read pointer scans through the elements, and by comparing the current element to the previous one, we identify new unique elements to copy to the front.
+
+## Python Solution (Reference)
+
 ```python
 def removeDuplicates(nums):
     if not nums:
@@ -38,8 +43,30 @@ def removeDuplicates(nums):
     return k
 ```
 
-- Key idea: Use the sorted property to check adjacent elements and maintain a write boundary.
-- Why it works: The read pointer scans through the elements, and by comparing the current element to the previous one, we identify new unique elements to copy to the front.
+## C++ Solution (Primary)
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        if(nums.empty())
+            return 0;
+
+        int slow = 0;
+
+        for(int fast = 1; fast < nums.size(); fast++) {
+            if(nums[slow] != nums[fast]) {
+                nums[++slow] = nums[fast];
+            }
+        }
+
+        return slow + 1;
+    }
+};
+```
 
 ## Pattern Recognition
 

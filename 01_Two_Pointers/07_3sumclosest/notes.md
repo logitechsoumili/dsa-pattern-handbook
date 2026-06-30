@@ -31,6 +31,11 @@ def threeSumClosest_bruteforce(nums, target):
 
 Sort the array. Iterate through the array with a fixed index `i`. For each fixed element `nums[i]`, use two pointers (`left = i + 1`, `right = len(nums) - 1`) to find a pair such that the total sum of `nums[i] + nums[left] + nums[right]` is as close to the target as possible. Calculate the sum and update the result if the absolute difference `abs(total - target)` is smaller than the current minimum difference. Move pointers inward: if the sum is less than the target, increment `left`; if the sum is greater than the target, decrement `right`. If the sum equals the target, return the sum immediately.
 
+- Key idea: Sort the array to enable logical inward pointer movement based on comparison with the target.
+- Why it works: As the array is sorted, incrementing `left` increases the sum, and decrementing `right` decreases the sum, enabling us to search the closest value systematically.
+
+## Python Solution (Reference)
+
 ```python
 class Solution:
     def threeSumClosest(self, nums: list[int], target: int) -> int:
@@ -60,8 +65,41 @@ class Solution:
         return res_sum
 ```
 
-- Key idea: Sort the array to enable logical inward pointer movement based on comparison with the target.
-- Why it works: As the array is sorted, incrementing `left` increases the sum, and decrementing `right` decreases the sum, enabling us to search the closest value systematically.
+## C++ Solution (Primary)
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    int threeSumClosest(vector<int>& nums, int target) {
+        sort(nums.begin(), nums.end());
+
+        int closestSum = nums[0] + nums[1] + nums[2];
+
+        for (int i = 0; i < nums.size() - 2; i++){
+            int left = i + 1;
+            int right = nums.size() - 1;
+
+            while (left < right){
+                int currentSum = nums[i] + nums[left] + nums[right];
+
+                if(abs(currentSum - target) < abs(closestSum - target)) closestSum = currentSum;
+
+                if (currentSum == target) return currentSum;
+                else if (currentSum < target){
+                    left++;
+                }
+                else{
+                    right--;
+                }
+            }
+        }
+        return closestSum;
+    }
+};
+```
 
 ## Pattern Recognition
 

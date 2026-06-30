@@ -27,6 +27,11 @@ def threeSum_bruteforce(nums):
 
 Sort the array first. Iterate through the array with a pointer `i` from `0` to `len(nums) - 3`. If the current element is a duplicate of the previous element, skip it. For each fixed `nums[i]`, convert the problem to finding a pair in the remaining array that sums to `-nums[i]`. Use two pointers (`left = i + 1`, `right = len(nums) - 1`) to search inward. If the sum matches `-nums[i]`, store the triplet and adjust pointers, bypassing duplicates.
 
+- Key idea: Use sorting to simplify duplicate detection and enable a two-pointer search on the remaining subarray.
+- Why it works: For a fixed `nums[i]`, finding `nums[j] + nums[k] == -nums[i]` on a sorted subarray can be resolved in linear time by moving pointers based on whether the sum is less than or greater than the target.
+
+## Python Solution (Reference)
+
 ```python
 class Solution:
     def threeSum(self, nums: list[int]) -> list[list[int]]:
@@ -62,8 +67,45 @@ class Solution:
         return res
 ```
 
-- Key idea: Use sorting to simplify duplicate detection and enable a two-pointer search on the remaining subarray.
-- Why it works: For a fixed `nums[i]`, finding `nums[j] + nums[k] == -nums[i]` on a sorted subarray can be resolved in linear time by moving pointers based on whether the sum is less than or greater than the target.
+## C++ Solution (Primary)
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> res;
+
+        for (int i = 0; i < nums.size() - 2; i++){
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+
+            int left = i + 1, right = nums.size() - 1;
+            int target = -1 * nums[i];
+
+            while (left < right){
+                int sum = nums[left] + nums[right];
+
+                if (sum == target){
+                    res.push_back({nums[i], nums[left], nums[right]});
+
+                    while (left < right && nums[left] == nums[left + 1]) left++;
+                    while (left < right && nums[right] == nums[right - 1]) right --;
+
+                    left++;
+                    right--;
+                }
+                else if (sum < target) left++;
+                else right--;
+            }
+        }
+
+        return res;
+    }
+};
+```
 
 ## Pattern Recognition
 
