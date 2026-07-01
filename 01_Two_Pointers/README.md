@@ -39,6 +39,25 @@ def opposite_ends_template(arr, target):
     return []
 ```
 
+```cpp
+vector<int> opposite_ends_template(const vector<int>& arr, int target) {
+    int left = 0;
+    int right = arr.size() - 1;
+    
+    while (left < right) {
+        int current_val = arr[left] + arr[right];
+        if (current_val == target) {
+            return {left, right};
+        } else if (current_val < target) {
+            left++;
+        } else {
+            right--;
+        }
+    }
+    return {};
+}
+```
+
 ### Read/Write Boundary (Remove Duplicates variation)
 
 ```python
@@ -49,6 +68,19 @@ def read_write_template(arr):
             arr[write_idx] = arr[read_idx]
             write_idx += 1
     return write_idx
+```
+
+```cpp
+int read_write_template(vector<int>& arr) {
+    int write_idx = 0;
+    for (int read_idx = 0; read_idx < arr.size(); read_idx++) {
+        if (condition_to_write(arr[read_idx])) {
+            arr[write_idx] = arr[read_idx];
+            write_idx++;
+        }
+    }
+    return write_idx;
+}
 ```
 
 ## Common Variations
