@@ -22,6 +22,24 @@ def longestKSubstr_bruteforce(s, k):
     return max_len
 ```
 
+```cpp
+int longestKSubstr_bruteforce(string s, int k) {
+    int maxLen = -1;
+    for (int i = 0; i < s.size(); i++) {
+        unordered_set<char> uniqueChars;
+        for (int j = i; j < s.size(); j++) {
+            uniqueChars.insert(s[j]);
+            if (uniqueChars.size() == k) {
+                maxLen = max(maxLen, j - i + 1);
+            } else if (uniqueChars.size() > k) {
+                break;
+            }
+        }
+    }
+    return maxLen;
+}
+```
+
 - Time Complexity: O(n^2) due to nested loops.
 - Space Complexity: O(k) for the set storing at most `k + 1` unique characters.
 
@@ -49,6 +67,31 @@ class Solution:
                 max_len = max(max_len, right - left + 1)
 
         return max_len
+```
+
+```cpp
+class Solution {
+  public:
+    int longestKSubstr(string &s, int k) {
+        unordered_map<char, int> freq;
+        int left = 0;
+        int maxLen = -1;
+        
+        for (int right = 0; right < s.size(); right++){
+            freq[s[right]]++;
+            
+            while (freq.size() > k){
+                freq[s[left]]--;
+                if (freq[s[left]] == 0) freq.erase(s[left]);
+                left++;
+            }
+            
+            if (freq.size() == k) maxLen = max(maxLen, right - left + 1);
+        }
+        
+        return maxLen;
+    }
+};
 ```
 
 - Key idea: Use a hash map to maintain the frequency of characters in the current window and dynamically size the window to satisfy the constraint.

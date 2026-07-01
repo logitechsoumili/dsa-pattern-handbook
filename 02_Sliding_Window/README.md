@@ -39,6 +39,23 @@ def fixed_window_template(arr, k):
     return result
 ```
 
+```cpp
+int fixed_window_template(const vector<int>& arr, int k) {
+    if (arr.size() < k) return 0;
+    
+    int window_val = initial_state(vector<int>(arr.begin(), arr.begin() + k));
+    int result = window_val;
+    
+    for (int i = k; i < arr.size(); i++) {
+        int incoming = arr[i];
+        int outgoing = arr[i - k];
+        window_val = update_state(window_val, incoming, outgoing);
+        result = compute_optimal(result, window_val);
+    }
+    return result;
+}
+```
+
 ### Variable-Size Sliding Window (Constraint-Based)
 
 ```python
@@ -59,11 +76,34 @@ def variable_window_template(arr, constraint_val):
     return result
 ```
 
+```cpp
+int variable_window_template(const vector<int>& arr, int constraint_val) {
+    int left = 0;
+    int result = initial_result();
+    unordered_map<int, int> window_state;
+    
+    for (int right = 0; right < arr.size(); right++) {
+        add_to_state(window_state, arr[right]);
+        
+        while (!is_window_valid(window_state, constraint_val)) {
+            remove_from_state(window_state, arr[left]);
+            left++;
+        }
+        result = update_result(result, left, right);
+    }
+    return result;
+}
+```
+
 ### Character Replacement Variant
 
 The window remains valid while:
 ```python
 windowLen - maxFreq <= k
+```
+or in C++:
+```cpp
+(right - left + 1) - maxFreq <= k
 ```
 - `maxFreq` represents the frequency of the most common character in the current sliding-window history.
 - The remaining characters are the ones that would need replacement.
@@ -75,6 +115,10 @@ Some sliding window problems involve binary arrays. Instead of maintaining a fre
 
 The window remains valid while:
 ```python
+zeroCount <= k
+```
+or in C++:
+```cpp
 zeroCount <= k
 ```
 - `zeroCount` represents the count of the bad value (e.g., zeros) inside the current window.

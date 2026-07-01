@@ -21,6 +21,23 @@ def minSubArrayLen_bruteforce(target, nums):
     return 0 if min_len == float('inf') else min_len
 ```
 
+```cpp
+int minSubArrayLen_bruteforce(int target, vector<int>& nums) {
+    int minLen = INT_MAX;
+    for (int i = 0; i < nums.size(); i++) {
+        int currSum = 0;
+        for (int j = i; j < nums.size(); j++) {
+            currSum += nums[j];
+            if (currSum >= target) {
+                minLen = min(minLen, j - i + 1);
+                break;
+            }
+        }
+    }
+    return minLen == INT_MAX ? 0 : minLen;
+}
+```
+
 - Time Complexity: O(n^2) due to nested loops.
 - Space Complexity: O(1)
 
@@ -44,6 +61,27 @@ class Solution:
                 left += 1
 
         return 0 if min_len == float('inf') else min_len
+```
+
+```cpp
+class Solution {
+public:
+    int minSubArrayLen(int target, vector<int>& nums) {
+        int left = 0, currentSum = 0;
+        int minLen = INT_MAX;
+
+        for (int right = 0; right < nums.size(); right++){
+            currentSum += nums[right];
+
+            while (currentSum >= target){
+                minLen = min(minLen, right - left + 1);
+                currentSum -= nums[left];
+                left++;
+            }
+        }
+        return minLen == INT_MAX ? 0 : minLen;
+    }
+};
 ```
 
 - Key idea: Dynamically adjust the window size based on the validity of the current subarray sum.

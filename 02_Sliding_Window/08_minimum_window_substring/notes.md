@@ -46,6 +46,37 @@ def minWindow_bruteforce(s: str, t: str) -> str:
     return res
 ```
 
+```cpp
+string minWindow_bruteforce(string s, string t) {
+    if (s.empty() || t.empty()) return "";
+    unordered_map<char, int> tCount;
+    for (char c : t) tCount[c]++;
+    int minLen = INT_MAX;
+    string res = "";
+    for (int i = 0; i < s.size(); i++) {
+        for (int j = i; j < s.size(); j++) {
+            string sub = s.substr(i, j - i + 1);
+            unordered_map<char, int> subCount;
+            for (char c : sub) subCount[c]++;
+            bool isValid = true;
+            for (auto& pair : tCount) {
+                if (subCount[pair.first] < pair.second) {
+                    isValid = false;
+                    break;
+                }
+            }
+            if (isValid) {
+                if (sub.size() < minLen) {
+                    minLen = sub.size();
+                    res = sub;
+                }
+            }
+        }
+    }
+    return res;
+}
+```
+
 - **Time Complexity:** $O(m^3)$ where $m$ is the length of `s`. There are $O(m^2)$ possible substrings, and verifying each substring takes $O(m)$ time to count character frequencies.
 - **Space Complexity:** $O(m + n)$ to store counts of characters in the substring and string `t`.
 
@@ -148,6 +179,59 @@ class Solution:
                 left += 1
 
         return res
+```
+
+```cpp
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        unordered_map<char, int> targetFreq;
+        unordered_map<char, int> windowFreq;
+
+        // creating map of characters in t
+        for (char ch : t)
+        {
+            targetFreq[ch]++;
+        }
+
+        int required = targetFreq.size();
+        int formed = 0, left = 0;
+        int minLen = INT_MAX;
+        int start = 0;
+
+        for (int right = 0; right < s.size(); right++){
+            
+            // expanding from right
+            char ch = s[right];
+            windowFreq[ch]++;
+
+            // if the character exists and satisfies the number of characters in targetFreq,
+            // formed++ to match required which stores the targetFreq.size()
+            if (targetFreq.count(ch) && targetFreq[ch] == windowFreq[ch]) formed++;
+
+            // valid condition
+            while (formed == required){
+                int windowLen = right - left + 1;
+
+                // 1. update answer
+                if (windowLen < minLen){
+                    minLen = windowLen;
+                    start = left;
+                }
+
+                // 2. shrink from left
+                char lc = s[left];
+                windowFreq[lc]--;
+
+                // 3. if the window becomes invalid, stop shrinking.
+                if (targetFreq.count(lc) && windowFreq[lc] < targetFreq[lc]) formed--;
+                left++;
+            }
+        }
+
+        return minLen == INT_MAX ? "" : s.substr(start, minLen);
+    }
+};
 ```
 
 ### Step-by-Step Walkthrough (Dry Run)

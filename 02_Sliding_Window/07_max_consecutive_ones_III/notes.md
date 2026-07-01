@@ -48,6 +48,26 @@ def longestOnes_bruteforce(nums: List[int], k: int) -> int:
     return max_len
 ```
 
+```cpp
+int longestOnes_bruteforce(vector<int>& nums, int k) {
+    int maxLen = 0;
+    for (int i = 0; i < nums.size(); i++) {
+        int zeroCount = 0;
+        for (int j = i; j < nums.size(); j++) {
+            if (nums[j] == 0) {
+                zeroCount++;
+            }
+            if (zeroCount <= k) {
+                maxLen = max(maxLen, j - i + 1);
+            } else {
+                break;
+            }
+        }
+    }
+    return maxLen;
+}
+```
+
 - **Time Complexity:** O(n^2) due to nested loops iterating over subarrays.
 - **Space Complexity:** O(1) auxiliary space as we only use a few integer variables.
 
@@ -125,6 +145,28 @@ class Solution:
             maxLen = max(maxLen, right - left + 1)
 
         return maxLen
+```
+
+```cpp
+class Solution {
+public:
+    int longestOnes(vector<int>& nums, int k) {
+        int zeroCount = 0, left = 0, maxLen = 0;
+
+        for (int right = 0; right < nums.size(); right++){
+            if (nums[right] == 0) zeroCount++;
+
+            while (zeroCount > k){
+                if (nums[left] == 0) zeroCount--;
+                left++;
+            }
+
+            maxLen = max(maxLen, right - left + 1);
+        }
+
+        return maxLen;
+    }
+};
 ```
 
 ### Dry Run Example

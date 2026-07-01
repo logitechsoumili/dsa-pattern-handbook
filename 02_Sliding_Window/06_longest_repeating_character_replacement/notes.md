@@ -51,6 +51,24 @@ def characterReplacement_bruteforce(s: str, k: int) -> int:
     return max_len
 ```
 
+```cpp
+int characterReplacement_bruteforce(string s, int k) {
+    int maxLen = 0;
+    for (int i = 0; i < s.size(); i++) {
+        unordered_map<char, int> freq;
+        int maxFreq = 0;
+        for (int j = i; j < s.size(); j++) {
+            freq[s[j]]++;
+            maxFreq = max(maxFreq, freq[s[j]]);
+            if ((j - i + 1) - maxFreq <= k) {
+                maxLen = max(maxLen, j - i + 1);
+            }
+        }
+    }
+    return maxLen;
+}
+```
+
 - Time Complexity: O(n^2) because we use nested loops to inspect all possible substrings.
 - Space Complexity: O(1) auxiliary space (or O(26) = O(1)) because the frequency map stores at most 26 uppercase English letters.
 
@@ -128,6 +146,30 @@ class Solution:
             maxLen = max(maxLen, right - left + 1)
 
         return maxLen
+```
+
+```cpp
+class Solution {
+public:
+    int characterReplacement(string s, int k) {
+        unordered_map<char, int> freq;
+        int maxFreq = 0, left = 0, maxLen = 0;
+
+        for (int right = 0; right < s.size(); right++){
+            freq[s[right]]++;
+            maxFreq = max(maxFreq, freq[s[right]]);
+
+            while ((right - left + 1) - maxFreq > k){
+                freq[s[left]]--;
+                left++;
+            }
+
+            maxLen = max(maxLen, right - left + 1);
+        }
+
+        return maxLen;
+    }
+};
 ```
 
 ### Step-by-Step Walkthrough

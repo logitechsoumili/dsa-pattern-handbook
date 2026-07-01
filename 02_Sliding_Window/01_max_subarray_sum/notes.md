@@ -19,6 +19,20 @@ def maxSubarraySum_bruteforce(arr, k):
     return max_sum
 ```
 
+```cpp
+int maxSubarraySum_bruteforce(vector<int>& arr, int k) {
+    int maxSum = 0;
+    for (int i = 0; i <= (int)arr.size() - k; i++) {
+        int currSum = 0;
+        for (int j = i; j < i + k; j++) {
+            currSum += arr[j];
+        }
+        maxSum = max(maxSum, currSum);
+    }
+    return maxSum;
+}
+```
+
 - Time Complexity: O(n * k) because we compute the sum of `k` elements for each of the `n - k + 1` window positions.
 - Space Complexity: O(1)
 
@@ -40,6 +54,27 @@ class Solution:
             max_sum = max(max_sum, window_sum)
 
         return max_sum
+```
+
+```cpp
+class Solution {
+  public:
+    int maxSubarraySum(vector<int>& arr, int k) {
+        int left = 0, sum = 0;
+        int maxSum = INT_MIN;
+        
+        for (int right = 0; right < arr.size(); right++){
+            sum += arr[right];
+            
+            if ((right - left + 1) == k){
+                maxSum = max(maxSum, sum);
+                sum -= arr[left];
+                left++;
+            }
+        }
+        return maxSum;
+    }
+};
 ```
 
 - Key idea: Reuse the sum of the overlapping elements between adjacent windows.

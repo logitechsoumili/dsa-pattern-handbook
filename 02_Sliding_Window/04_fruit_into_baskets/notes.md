@@ -21,6 +21,23 @@ def totalFruit_bruteforce(fruits):
     return max_fruits
 ```
 
+```cpp
+int totalFruit_bruteforce(vector<int>& fruits) {
+    int maxFruits = 0;
+    for (int i = 0; i < fruits.size(); i++) {
+        unordered_set<int> basket;
+        for (int j = i; j < fruits.size(); j++) {
+            basket.insert(fruits[j]);
+            if (basket.size() > 2) {
+                break;
+            }
+            maxFruits = max(maxFruits, j - i + 1);
+        }
+    }
+    return maxFruits;
+}
+```
+
 - Time Complexity: O(n^2) due to nested loops.
 - Space Complexity: O(1) because the set stores at most 3 elements.
 
@@ -47,6 +64,31 @@ class Solution:
             max_fruits = max(max_fruits, right - left + 1)
 
         return max_fruits
+```
+
+```cpp
+class Solution {
+public:
+    int totalFruit(vector<int>& fruits) {
+        unordered_map<int, int> freq;
+        int left = 0;
+        int maxLen = 0;
+
+        for (int right = 0; right < fruits.size(); right++){
+            freq[fruits[right]]++;
+
+            while (freq.size() > 2){
+                freq[fruits[left]]--;
+                if (freq[fruits[left]] == 0) freq.erase(fruits[left]);
+                left++;
+            }
+
+            maxLen = max(maxLen, right - left + 1);
+        }
+
+        return maxLen;
+    }
+};
 ```
 
 - Key idea: Map the problem description (picking 2 types of fruit from trees) to a mathematical constraint: finding the longest subarray with at most 2 distinct values.
