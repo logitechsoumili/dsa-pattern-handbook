@@ -87,6 +87,58 @@ Unlike **Linked List Cycle II** or **Find the Duplicate Number**, we do not need
 
 ---
 
+## Python & C++ Implementations
+
+```python
+def square(n):
+    s = 0
+    while n > 0:
+        d = n % 10
+        s += d * d
+        n = n // 10
+    return s
+
+class Solution:
+    def isHappy(self, n: int) -> bool:
+        slow = fast = n
+        while fast != 1:
+            slow = square(slow)
+            fast = square(square(fast))
+            if slow == fast and slow != 1:
+                return False
+        return True
+```
+
+```cpp
+int square(int n){
+    int sum = 0;
+    while (n > 0){
+        int digit = n % 10;
+        sum += digit * digit;
+        n /= 10;
+    }
+    return sum;
+}
+
+class Solution {
+public:
+    bool isHappy(int n) {
+        int slow = n, fast = n;
+
+        while (true){
+            slow = square(slow);
+            fast = square(square(fast));
+
+            if (fast == 1) return true;
+
+            if (slow == fast) return false;
+        }
+    }
+};
+```
+
+---
+
 ## Visual Walkthrough
 
 Here is how the slow and fast pointers transition through both scenarios.

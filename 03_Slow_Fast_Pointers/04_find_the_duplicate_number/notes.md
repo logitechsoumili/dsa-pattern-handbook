@@ -123,6 +123,51 @@ The algorithm executes in two distinct phases:
 
 ---
 
+## Python & C++ Implementations
+
+```python
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        slow = fast = 0
+        while True:
+            slow = nums[slow]
+            fast = nums[nums[fast]]
+            if slow == fast:
+                slow = 0
+                while slow != fast:
+                    slow = nums[slow]
+                    fast = nums[fast]
+                return slow
+```
+
+```cpp
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        int slow = nums[0];
+        int fast = nums[0];
+
+        while (true){
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+
+            if (slow == fast){
+                slow = nums[0];
+
+                while (slow != fast){
+                    slow = nums[slow];
+                    fast = nums[fast];
+                }
+                return slow;
+            }
+        }
+        return -1;
+    }
+};
+```
+
+---
+
 ## Visual Walkthrough
 
 Using the array `nums = [1, 3, 4, 2, 2]`, we trace the pointers.

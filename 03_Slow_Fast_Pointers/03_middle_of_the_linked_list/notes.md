@@ -45,6 +45,24 @@ def middleNode_twopass(head: Optional[ListNode]) -> Optional[ListNode]:
     return curr
 ```
 
+```cpp
+ListNode* middleNode_twopass(ListNode* head) {
+    ListNode* curr = head;
+    int count = 0;
+    while (curr != nullptr) {
+        count++;
+        curr = curr->next;
+    }
+    
+    int middle_idx = count / 2;
+    curr = head;
+    for (int i = 0; i < middle_idx; i++) {
+        curr = curr->next;
+    }
+    return curr;
+}
+```
+
 *   **Time Complexity**: $O(n)$ because we perform two traversals of the list (first traversal of $n$ nodes, second traversal of $n/2$ nodes, totaling $1.5n$ operations).
 *   **Space Complexity**: $O(1)$ since we only use basic counter and pointer variables.
 
@@ -179,6 +197,23 @@ class Solution:
             slow = slow.next
             fast = fast.next.next
         return slow
+```
+
+```cpp
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) {
+        ListNode* slow = head;
+        ListNode* fast = head;
+
+        while (fast && fast->next){
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+
+        return slow;
+    }
+};
 ```
 
 ---

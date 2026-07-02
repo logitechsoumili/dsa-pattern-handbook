@@ -61,6 +61,21 @@ def has_cycle(head):
     return False
 ```
 
+```cpp
+bool has_cycle(ListNode* head) {
+    ListNode* slow = head;
+    ListNode* fast = head;
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+        if (slow == fast) {
+            return true;
+        }
+    }
+    return false;
+}
+```
+
 ### Find Cycle Entry
 
 ```python
@@ -79,6 +94,27 @@ def detect_cycle_entry(head):
     return None
 ```
 
+```cpp
+ListNode* detect_cycle_entry(ListNode* head) {
+    ListNode* slow = head;
+    ListNode* fast = head;
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+        if (slow == fast) {
+            // Phase 2: Find cycle entry
+            slow = head;
+            while (slow != fast) {
+                slow = slow->next;
+                fast = fast->next;
+            }
+            return slow;
+        }
+    }
+    return nullptr;
+}
+```
+
 ### Functional Graph Variant
 
 ```python
@@ -90,6 +126,22 @@ def functional_graph_cycle(x0, next_state):
         if slow == fast:
             # Match condition for cycle detection or entry
             return slow
+```
+
+```cpp
+template <typename T, typename F>
+T functional_graph_cycle(T x0, F next_state) {
+    T slow = x0;
+    T fast = x0;
+    while (true) {
+        slow = next_state(slow);
+        fast = next_state(next_state(fast));
+        if (slow == fast) {
+            // Match condition for cycle detection or entry
+            return slow;
+        }
+    }
+}
 ```
 
 ---

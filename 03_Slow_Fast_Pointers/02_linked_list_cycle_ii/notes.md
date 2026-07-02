@@ -49,6 +49,21 @@ def detectCycle_bruteforce(head: Optional[ListNode]) -> Optional[ListNode]:
     return None
 ```
 
+```cpp
+ListNode *detectCycle_bruteforce(ListNode *head) {
+    unordered_set<ListNode*> visited;
+    ListNode* curr = head;
+    while (curr != nullptr) {
+        if (visited.count(curr)) {
+            return curr;
+        }
+        visited.insert(curr);
+        curr = curr->next;
+    }
+    return nullptr;
+}
+```
+
 *   **Time Complexity**: $O(n)$ because we traverse each node at most once, and Set lookup is $O(1)$ on average.
 *   **Space Complexity**: $O(n)$ to store node references in the Hash Set. This violates the $O(1)$ auxiliary space constraint.
 
@@ -144,6 +159,31 @@ class Solution:
                 return ptr1  # Both pointers meet at the cycle entry
 
         return None  # No cycle detected
+```
+
+```cpp
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        ListNode* slow = head;
+        ListNode* fast = head;
+
+        while (fast && fast->next){
+            slow = slow->next;
+            fast = fast->next->next;
+            
+            if (slow == fast){
+                slow = head;
+                while (slow != fast){
+                    slow = slow->next;
+                    fast = fast->next;
+                }
+                return slow;
+            }
+        }
+        return NULL;
+    }
+};
 ```
 
 ---

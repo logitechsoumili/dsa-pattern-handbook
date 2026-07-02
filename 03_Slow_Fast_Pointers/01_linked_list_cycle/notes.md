@@ -26,6 +26,21 @@ def hasCycle_bruteforce(head) -> bool:
     return False
 ```
 
+```cpp
+bool hasCycle_bruteforce(ListNode *head) {
+    unordered_set<ListNode*> visited;
+    ListNode* curr = head;
+    while (curr != nullptr) {
+        if (visited.count(curr)) {
+            return true;
+        }
+        visited.insert(curr);
+        curr = curr->next;
+    }
+    return false;
+}
+```
+
 - **Time Complexity:** $O(n)$ where $n$ is the number of nodes in the linked list. We traverse the list once, and hash set lookups take $O(1)$ on average.
 - **Space Complexity:** $O(n)$ to store each node's reference in the hash set.
 
@@ -83,6 +98,25 @@ class Solution:
             if slow == fast:
                 return True
         return False
+```
+
+```cpp
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        ListNode* slow = head;
+        ListNode* fast = head;
+
+        while (fast && fast->next){
+            slow = slow -> next;
+            fast = fast -> next -> next;
+
+            if (slow == fast) return true;
+        }
+
+        return false;
+    }
+};
 ```
 
 ### Step-by-Step Walkthrough (Dry Run)
