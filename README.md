@@ -76,6 +76,8 @@ The Sliding Window pattern is used for problems involving contiguous subarrays o
 
 The Slow & Fast Pointers pattern (also known as Floyd's Cycle Detection Algorithm) uses two pointers moving at different speeds to traverse a linear or cyclic structure. It is commonly applied to cycle detection in linked lists, finding loop entry points, determining midpoints, and solving cyclic mapping problems in arrays.
 
+### [4. Kadane's Algorithm](./04_Kadane_Algorithm/README.md)
+
 ## Learning Approach
 
 Mastering algorithms requires a systematic, workflow-oriented approach. For every problem in this handbook, we follow these steps:
