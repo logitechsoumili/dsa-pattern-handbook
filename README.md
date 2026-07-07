@@ -78,6 +78,8 @@ The Slow & Fast Pointers pattern (also known as Floyd's Cycle Detection Algorith
 
 ### [4. Kadane's Algorithm](./04_Kadane_Algorithm/README.md)
 
+The Kadane's Algorithm pattern is a dynamic programming technique used to find the maximum or minimum contiguous subarray sum or product in linear time and constant space. It involves making local optimal decisions at each element to build the global optimal subarray, and is commonly applied to circular arrays, multi-state dynamic programming, and contiguous array optimization problems.
+
 ## Learning Approach
 
 Mastering algorithms requires a systematic, workflow-oriented approach. For every problem in this handbook, we follow these steps:
