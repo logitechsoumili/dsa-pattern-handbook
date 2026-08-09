@@ -2,7 +2,6 @@
 
 <a href="https://leetcode.com/u/logitechsoumili"><img src="https://img.shields.io/badge/Platform-LeetCode-FFA116?logo=leetcode&logoColor=white" alt="LeetCode" /></a>
 <a href="https://www.geeksforgeeks.org/user/logitechsoumili"><img src="https://img.shields.io/badge/Platform-GeeksforGeeks-2F8D46?logo=geeksforgeeks&logoColor=white" alt="GeeksforGeeks" /></a>
-<a href="https://isocpp.org/"><img src="https://img.shields.io/badge/Language-C++-00599C?logo=c%2B%2B&logoColor=white" alt="C++" /></a>
 
 A structured handbook of Data Structures and Algorithms patterns, containing problem solutions, detailed notes, brute-force and optimized approaches, templates, common mistakes, and interview-focused insights.
 
@@ -18,17 +17,10 @@ Focusing on patterns provides:
 * **Interview-focused insights** — Tips on how to structure thoughts and communicate solutions clearly.
 * **Revision-friendly notes** — Summarized concepts and key takeaways for quick review.
 
-## Why Modern C++?
-
-* **Rich STL Ecosystem** — Highly optimized data structures and algorithms (containers, iterators, sort, binary search) available out-of-the-box.
-* **Strong Interview & OA Adoption** — Widely supported and preferred in industry technical evaluations and online assessments.
-* **Competitive Programming Suitability** — Extremely fast execution times, efficient memory usage, and granular control.
-* **Zero-Overhead Pattern Implementation** — Clean, performant translation of common DSA pattern logic without language-level overhead.
-
 
 ## Learning Roadmap
 
-This handbook follows a structured DSA roadmap organized by patterns to build problem-solving intuition, online assessment (OA) speed, and competitive programming readiness. Problems are solved using Modern C++ as the primary language with a focus on standard STL containers and algorithms, documented, and organized according to the roadmap sequence. 
+This handbook follows a structured DSA roadmap organized by patterns to build problem-solving intuition, online assessment (OA) speed, and competitive programming readiness. Problems may be implemented in different languages (such as C++, Python, or Java), focusing on algorithmic reasoning, pattern recognition, data structure selection, and complexity analysis rather than language-specific features. 
 
 ### Resources
 
@@ -39,7 +31,7 @@ This handbook follows a structured DSA roadmap organized by patterns to build pr
 
 Each pattern is organized into its own directory. Every problem contains:
 
-* `solution files` — Final optimized implementations in Modern C++ (primary) and Python (reference).
+* `solution.*` — Language-specific implementation files (e.g., C++, Python, Java) for the problem.
 * `notes.md` — Problem summary, alternative approaches, observations, complexity analysis, common mistakes, and interview notes.
 
 ```text
@@ -82,15 +74,17 @@ The Kadane's Algorithm pattern is a dynamic programming technique used to find t
 
 ### [5. Prefix Sum](./05_Prefix_Sum/README.md)
 
+The Prefix Sum pattern precomputes cumulative totals to answer range sum queries over contiguous subarrays in constant O(1) time. When combined with HashMaps, it efficiently tracks frequencies or earliest indices of previous prefix states, enabling linear O(n) solutions for target sum matches, divisibility constraints, and binary balance problems even in the presence of negative numbers.
+
 ## Learning Approach
 
 Mastering algorithms requires a systematic, workflow-oriented approach. For every problem in this handbook, we follow these steps:
 
 * **Understand the brute-force solution** — Start by conceptualizing and analyzing the most straightforward approach to establish a baseline.
 * **Identify the bottleneck** — Pinpoint the specific operations or redundant steps that degrade performance.
-* **Derive the optimized STL approach** — Apply Modern C++ Standard Template Library (STL) containers and optimized algorithms to eliminate the bottlenecks and minimize complexity.
+* **Derive the optimized approach** — Select appropriate data structures and algorithmic techniques to eliminate bottlenecks and minimize time/space complexity.
 * **Extract the reusable pattern** — Abstract the core strategy so it can be recognized and applied to similar challenges in interviews, OAs, and competitive programming.
-* **Document observations and mistakes** — Record C++ specific memory details, type edge cases (such as unsigned index underflow), and debugging lessons.
+* **Document observations and mistakes** — Record language-independent implementation considerations, edge cases, and debugging lessons.
 * **Store notes for future revision** — Keep structured, lightweight documentation for efficient recall and interview preparation.
 
 ## How to Use This Handbook
@@ -100,16 +94,16 @@ To get the most out of this repository, follow this recommended progression:
 1. **Read the pattern README first** — Start by reading the folder-level README to understand the pattern's core concept, classification, and templates.
 2. **Learn recognition signals** — Familiarize yourself with the clues and keywords that indicate when to apply the pattern.
 3. **Understand the brute-force solution** — Walk through the initial sub-optimal approach for a problem to build a clear understanding of its baseline constraints.
-4. **Study the optimized C++ solution** — Analyze the primary C++ STL-based solution and compare it to the brute-force version to see how the bottleneck was solved efficiently.
-5. **Review notes and common mistakes** — Read the notes file for each problem to grasp the edge cases, typical pitfalls, and C++ specific compiler or runtime gotchas.
-6. **Re-solve representative problems during revision** — Re-visit the key questions periodically in C++ to build speed and accuracy for interviews, online assessments, and competitive programming.
+4. **Study the optimized solution** — Analyze the optimal approach and compare it to the brute-force version to see how the bottleneck was solved efficiently.
+5. **Review notes and common mistakes** — Read the notes file for each problem to grasp the edge cases, implementation details, and typical pitfalls.
+6. **Re-solve representative problems during revision** — Re-visit key questions periodically in the language appropriate for your current practice, interview, or OA context to build speed and accuracy.
 
 
-## Technology Stack
+## Languages
 
-* **C++** (Primary Language)
-* **Python** (Reference Implementations)
-* **Java** (Additional Learning Language)
+* **C++**
+* **Python**
+* **Java**
 
 
 ## Support
