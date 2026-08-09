@@ -7,7 +7,7 @@
 Given a binary array `nums`, return the *maximum length of a contiguous subarray with an equal number of `0`s and `1`s*.
 
 ### Constraints:
-*   $1 \le \text{nums.length} \le 10^5$
+*   `1 <= nums.length <= 10^5`
 *   `nums[i]` is either `0` or `1`.
 
 ---
@@ -15,18 +15,18 @@ Given a binary array `nums`, return the *maximum length of a contiguous subarray
 # 1. Problem Intuition
 
 - We need to find the longest contiguous subarray where the count of `0`s equals the count of `1`s:
-  $$\text{count}(0) = \text{count}(1)$$
+  `count(0) == count(1)`
 - At first glance, counting two distinct values inside dynamic ranges looks like a 2D window problem. However, by transforming the values, we can map this directly into a **Prefix Sum / Prefix Balance** problem.
 
 ---
 
 # 2. Brute Force — O(n^2)
 
-A naive solution examines every possible subarray $(L, R)$:
-1. Pick a start index $L$.
-2. Pick an end index $R \ge L$.
+A naive solution examines every possible subarray `(L, R)`:
+1. Pick a start index `L`.
+2. Pick an end index `R >= L`.
 3. Count the number of `0`s and `1`s in `nums[L...R]`.
-4. If $\text{count}(0) == \text{count}(1)$, compute length $R - L + 1$ and update the maximum length found so far.
+4. If `count(0) == count(1)`, compute length `R - L + 1` and update the maximum length found so far.
 
 ```text
 Algorithm: Brute Force
@@ -46,7 +46,7 @@ return max_length
 ```
 
 ### Complexity Analysis
-- **All $(L, R)$ pairs**: $O(n^2)$
+- **All `(L, R)` pairs**: $O(n^2)$
 - **Counting 0s and 1s incrementally**: $O(1)$ per iteration
 - **Total Time Complexity**: $O(n^2)$
 - **Space Complexity**: $O(1)$
@@ -55,7 +55,7 @@ return max_length
 
 # 3. Why O(n^2) Is Inefficient
 
-With $n = 10^5$, an $O(n^2)$ solution requires $(10^5)^2 = 10^{10}$ operations, causing a **Time Limit Exceeded (TLE)**.
+With `n = 10^5`, an $O(n^2)$ solution requires `(10^5)^2 = 10^10` operations, causing a **Time Limit Exceeded (TLE)**.
 
 We need a single-pass $O(n)$ strategy. But how can prefix sums help when we have binary counts (`0` and `1`) instead of normal numeric sums?
 
@@ -74,42 +74,41 @@ Equal 0s and 1s  ──>  Balance Representation (+1 / -1)  ──>  Prefix Bala
 ## Step 4.1: Value Transformation (Balance Representation)
 
 Instead of maintaining separate counts for `0`s and `1`s, let me re-map the array elements:
-- Treat `1` as $+1$
-- Treat `0` as $-1$
+- Treat `1` as `+1`
+- Treat `0` as `-1`
 
 Why does this transformation work?
 
 Consider a subarray `nums[L...R]`:
-$$\text{subarray\_sum} = \sum_{i=L}^{R} \text{transformed}(nums[i])$$
-
-- Every `1` adds $+1$ to the sum.
-- Every `0` subtracts $-1$ from the sum.
+- Every `1` adds `+1` to the sum.
+- Every `0` subtracts `1` from the sum.
 
 If a subarray has an **equal number of `0`s and `1`s**, then:
-$$\text{count}(1) \cdot (+1) + \text{count}(0) \cdot (-1) = 0$$
+
+`count(1) * (+1) + count(0) * (-1) = 0`
 
 > [!IMPORTANT]
 > **Core Mathematical Transformation:**
-> Finding a contiguous subarray with an equal number of `0`s and `1`s is **identical** to finding a contiguous subarray whose transformed sum equals **$0$**.
+> Finding a contiguous subarray with an equal number of `0`s and `1`s is **identical** to finding a contiguous subarray whose transformed sum equals **0**.
 
 ---
 
 ## Step 4.2: Expressing Range Sum as Difference of Prefix Balances
 
-Let $\text{balance}[i]$ be the prefix sum of the transformed array from index $0$ to index $i$:
+Let `balance[i]` be the prefix sum of the transformed array from index `0` to index `i`:
 
-$$\text{balance}[i] = \sum_{k=0}^{i} \text{transformed}(\text{nums}[k])$$
+`balance[i] = sum of transformed elements from index 0 to i`
 
 The sum of elements in subarray `nums[L...R]` is:
 
-$$\text{sum}(L \dots R) = \text{balance}[R] - \text{balance}[L - 1]$$
+`sum(L...R) = balance[R] - balance[L - 1]`
 
-For the subarray sum to equal $0$:
+For the subarray sum to equal 0:
 
-$$\text{balance}[R] - \text{balance}[L - 1] = 0 \implies \text{balance}[R] = \text{balance}[L - 1]$$
+`balance[R] - balance[L - 1] = 0` implies `balance[R] == balance[L - 1]`
 
 ### Key Observation:
-Whenever the prefix balance at current index $R$ is **equal** to the prefix balance at a previous index $L - 1$, the subarray between $L$ and $R$ has a net sum of $0$, meaning it contains an equal number of `0`s and `1`s!
+Whenever the prefix balance at current index `R` is **equal** to the prefix balance at a previous index `L - 1`, the subarray between `L` and `R` has a net sum of 0, meaning it contains an equal number of `0`s and `1`s!
 
 ```text
 Index:             -1    0    1    2    3    4    5
@@ -120,45 +119,45 @@ Prefix Balance:     0   -1    0   -1    0   +1    0
 ```
 
 Notice how `balance = 0` occurs at index `-1`, index `1`, index `3`, and index `5`.
-The subarray between index `2` and index `5` (`[0, 1, 1, 0]`) has balance $0$ at both index $1$ and index $5$, so its sum is $(-1) + 1 + 1 + (-1) = 0$.
+The subarray between index `2` and index `5` (`[0, 1, 1, 0]`) has balance `0` at both index `1` and index `5`, so its sum is `(-1) + 1 + 1 + (-1) = 0`.
 
 ---
 
 ## Step 4.3: Why Earliest Index is Necessary for Maximizing Length
 
-The length of a valid subarray ending at index $R$ starting after index $L - 1$ is:
+The length of a valid subarray ending at index `R` starting after index `L - 1` is:
 
-$$\text{length} = R - (L - 1)$$
+`length = R - (L - 1)`
 
-To **maximize** this length for a fixed current index $R$, we want $L - 1$ to be as **small** (as early) as possible!
+To **maximize** this length for a fixed current index `R`, we want `L - 1` to be as **small** (as early) as possible!
 
 Therefore:
 - When we encounter a new balance value for the **first time**, we record its index in a HashMap / Dictionary (`first_seen[balance] = index`).
-- If we encounter the **same** balance value again at a later index $R$, we do **NOT** update the recorded index in our map.
+- If we encounter the **same** balance value again at a later index `R`, we do **NOT** update the recorded index in our map.
 - Instead, we compute candidate length:
-  $$\text{length} = R - \text{first\_seen}[\text{balance}]$$
+  `length = R - first_seen[balance]`
   and update our global maximum length `max_len = max(max_len, length)`.
 
 > [!TIP]
 > **Why do we keep only the earliest index?**
-> Overwriting the stored index with a later index would decrease $R - \text{first\_seen}[\text{balance}]$, giving a shorter subarray length. To get the *longest* valid subarray, we must measure distance from the *earliest* occurrence of that balance.
+> Overwriting the stored index with a later index would decrease `R - first_seen[balance]`, giving a shorter subarray length. To get the *longest* valid subarray, we must measure distance from the *earliest* occurrence of that balance.
 
 ---
 
 # 5. Base HashMap State — `first_seen[0] = -1`
 
-Before processing any elements (at index $-1$), the prefix balance is $0$.
+Before processing any elements (at index `-1`), the prefix balance is `0`.
 
-Initializing `first_seen[0] = -1` accounts for valid subarrays that start at index $0$.
+Initializing `first_seen[0] = -1` accounts for valid subarrays that start at index `0`.
 
 ### Example:
 `nums = [0, 1]`
 - Before loop: `first_seen = {0: -1}`
-- $i = 0$ (`num = 0`): `balance = 0 + (-1) = -1`. Not in map. Store `first_seen[-1] = 0`.
-- $i = 1$ (`num = 1`): `balance = -1 + 1 = 0`. Balance `0` is in map at index `-1`!
-- Subarray length = $1 - (-1) = 2$. Maximum length = 2 (`[0, 1]`).
+- `i = 0` (`num = 0`): `balance = 0 + (-1) = -1`. Not in map. Store `first_seen[-1] = 0`.
+- `i = 1` (`num = 1`): `balance = -1 + 1 = 0`. Balance `0` is in map at index `-1`!
+- Subarray length = `1 - (-1) = 2`. Maximum length = 2 (`[0, 1]`).
 
-Without `first_seen[0] = -1`, a subarray starting at index $0$ with equal 0s and 1s would not have its initial boundary recorded properly.
+Without `first_seen[0] = -1`, a subarray starting at index `0` with equal 0s and 1s would not have its initial boundary recorded properly.
 
 ---
 
@@ -194,7 +193,7 @@ Return max_length
 
 ### Complexity Analysis
 - **Time Complexity**: $O(n)$, single pass through the array. Map lookup and insertion take $O(1)$ average time.
-- **Space Complexity**: $O(n)$, in the worst case (e.g. array of all `1`s), the hashmap stores up to $n + 1$ unique balance keys.
+- **Space Complexity**: $O(n)$, in the worst case (e.g. array of all `1`s), the hashmap stores up to `n + 1` unique balance keys.
 
 ---
 
@@ -224,7 +223,7 @@ O(n) Time | O(n) Space Optimal Solution
 
 This problem showcases two key techniques:
 
-1. **Indicator Transformation**: Converting binary choices (`0` vs `1`, or `A` vs `B`) into $+1$ and $-1$ allows tracking relative counts using a single numeric balance scalar.
+1. **Indicator Transformation**: Converting binary choices (`0` vs `1`, or `A` vs `B`) into `+1` and `-1` allows tracking relative counts using a single numeric balance scalar.
 2. **First-Occurrence HashMap Pattern**:
    - When **counting** subarrays $\to$ store **frequencies** in HashMap.
    - When **maximizing length** of subarray with sum 0 $\to$ store **earliest index** in HashMap.
@@ -235,14 +234,14 @@ This problem showcases two key techniques:
 
 | Problem | Target | HashMap Key | HashMap Value | Map Update Rule |
 | :--- | :--- | :--- | :--- | :--- |
-| **Subarray Sum Equals K** | Sum $= k$ | Prefix Sum | Frequency | Increment count on every occurrence |
-| **Subarray Sums Divisible by K** | Sum $\pmod k = 0$ | Remainder `rem` | Frequency | Increment count on every occurrence |
-| **Contiguous Array** | Sum $= 0$ (after $0 \to -1$) | Prefix Balance | Earliest Index | Store index **only on first occurrence** |
+| **Subarray Sum Equals K** | Sum `= k` | Prefix Sum | Frequency | Increment count on every occurrence |
+| **Subarray Sums Divisible by K** | Sum `% k == 0` | Remainder `rem` | Frequency | Increment count on every occurrence |
+| **Contiguous Array** | Sum `= 0` (after $0 \to -1$) | Prefix Balance | Earliest Index | Store index **only on first occurrence** |
 
 ---
 
 # 10. Recognition Cues & Common Mistakes
 
 *   **Recognition Cues**: Binary array, "equal number of X and Y", "longest contiguous subarray".
-*   ❌ **Common Mistake — Overwriting stored index**: Overwriting `first_seen[balance]` with the latest index $i$ reduces the calculated subarray length. Only set the value if the balance key is **not** present in the hashmap.
-*   ❌ **Common Mistake — Forgetting base case**: Omitting `first_seen[0] = -1` causes valid prefix subarrays starting at index $0$ to be ignored or computed with wrong length.
+*   ❌ **Common Mistake — Overwriting stored index**: Overwriting `first_seen[balance]` with the latest index `i` reduces the calculated subarray length. Only set the value if the balance key is **not** present in the hashmap.
+*   ❌ **Common Mistake — Forgetting base case**: Omitting `first_seen[0] = -1` causes valid prefix subarrays starting at index `0` to be ignored or computed with wrong length.

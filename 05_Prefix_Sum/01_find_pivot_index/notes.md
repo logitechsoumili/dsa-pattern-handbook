@@ -13,21 +13,21 @@ If the index is on the left edge of the array, then the left sum is `0` because 
 Return the *leftmost pivot index*. If no such index exists, return `-1`.
 
 ### Constraints:
-*   $1 \le \text{nums.length} \le 10^4$
-*   $-1000 \le \text{nums}[i] \le 1000$
+*   `1 <= nums.length <= 10^4`
+*   `-1000 <= nums[i] <= 1000`
 
 ---
 
 ## Intuition
 
-To find the pivot index, we need to compare the sum of elements before any index $i$ (left sum) with the sum of elements after index $i$ (right sum).
+To find the pivot index, we need to compare the sum of elements before any index `i` (left sum) with the sum of elements after index `i` (right sum).
 
 ### Why Brute Force is $O(n^2)$
 
 A naive brute-force approach would:
-1. Iterate through each index $i$ from $0$ to $n-1$.
-2. For each index $i$, run a loop to calculate the sum of elements from index $0$ to $i-1$ (`leftSum`).
-3. Run another loop to calculate the sum of elements from index $i+1$ to $n-1$ (`rightSum`).
+1. Iterate through each index `i` from `0` to `n - 1`.
+2. For each index `i`, run a loop to calculate the sum of elements from index `0` to `i - 1` (`leftSum`).
+3. Run another loop to calculate the sum of elements from index `i + 1` to `n - 1` (`rightSum`).
 4. Compare `leftSum` and `rightSum`.
 
 For an array of size $n$, this requires calculating sums repeatedly:
@@ -39,10 +39,10 @@ For an array of size $n$, this requires calculating sums repeatedly:
 We can optimize this to $O(n)$ time using a running sum.
 Instead of recalculating the sums at each index:
 1. The **total sum** of the array, `sum`, is constant.
-2. If we keep a running sum of elements we have already visited, let's call it `left`, then at any index $i$:
-   * The sum of elements strictly to the left of $i$ is exactly `left`.
-   * The sum of elements strictly to the right of $i$ can be computed in $O(1)$ as:
-     $$\text{right} = \text{sum} - \text{left} - \text{nums}[i]$$
+2. If we keep a running sum of elements we have already visited, let's call it `left`, then at any index `i`:
+   * The sum of elements strictly to the left of `i` is exactly `left`.
+   * The sum of elements strictly to the right of `i` can be computed in $O(1)$ as:
+     `right = sum - left - nums[i]`
 
 > [!IMPORTANT]
 > Since the total sum of the array is fixed, the right sum is simply the remaining portion of the total sum after subtracting the current element and the left sum. This allows us to avoid calculating prefix/suffix arrays or using nested loops.

@@ -9,15 +9,15 @@ Given an integer array `nums` and an integer `k`, return the *number of non-empt
 A **subarray** is a contiguous part of an array.
 
 ### Constraints:
-*   $1 \le \text{nums.length} \le 3 \times 10^4$
-*   $-10^4 \le \text{nums}[i] \le 10^4$
-*   $2 \le k \le 10^4$
+*   `1 <= nums.length <= 3 * 10^4`
+*   `-10^4 <= nums[i] <= 10^4`
+*   `2 <= k <= 10^4`
 
 ---
 
 # 1. Problem Intuition
 
-- We need to find the total count of contiguous subarrays whose sum is a multiple of $k$, meaning $\text{sum}(L \dots R) \pmod k = 0$.
+- We need to find the total count of contiguous subarrays whose sum is a multiple of `k`, meaning `sum(L...R) % k == 0`.
 - Because we are evaluating range sums over contiguous sequences, calculating prefix sums is a natural starting point.
 - Instead of memorizing a remainder hashmap trick, let's derive how mathematical modulo properties naturally lead to the optimal algorithm.
 
@@ -25,11 +25,11 @@ A **subarray** is a contiguous part of an array.
 
 # 2. Brute Force — O(n^3)
 
-The most direct approach checks every possible subarray $(L, R)$:
-1. Pick a starting index $L$.
-2. Pick an ending index $R \ge L$.
-3. Sum elements from $L$ to $R$.
-4. Check if $\text{current\_sum} \pmod k == 0$. If so, increment count.
+The most direct approach checks every possible subarray `(L, R)`:
+1. Pick a starting index `L`.
+2. Pick an ending index `R >= L`.
+3. Sum elements from `L` to `R`.
+4. Check if `current_sum % k == 0`. If so, increment count.
 
 ```text
 Algorithm: Brute Force
@@ -46,7 +46,7 @@ return count
 ```
 
 ### Complexity Analysis
-- **All $(L, R)$ pairs**: $O(n^2)$
+- **All `(L, R)` pairs**: $O(n^2)$
 - **Sum computation per pair**: $O(n)$
 - **Total Time Complexity**: $O(n^3)$
 - **Space Complexity**: $O(1)$
@@ -57,16 +57,16 @@ return count
 
 We can eliminate the inner loop by precomputing cumulative prefix sums:
 
-$$\text{prefix}[0] = 0$$
-$$\text{prefix}[i + 1] = \text{prefix}[i] + \text{nums}[i]$$
+- `prefix[0] = 0`
+- `prefix[i + 1] = prefix[i] + nums[i]`
 
-The sum of subarray $\text{nums}[L \dots R]$ can be computed in $O(1)$ time:
+The sum of subarray `nums[L...R]` can be computed in $O(1)$ time:
 
-$$\text{sum}(L \dots R) = \text{prefix}[R + 1] - \text{prefix}[L]$$
+- `sum(L...R) = prefix[R + 1] - prefix[L]`
 
-Now the condition for a subarray to be divisible by $k$ becomes:
+Now the condition for a subarray to be divisible by `k` becomes:
 
-$$(\text{prefix}[R + 1] - \text{prefix}[L]) \pmod k = 0$$
+- `(prefix[R + 1] - prefix[L]) % k == 0`
 
 ```text
 Algorithm: Prefix Sum O(n^2)
@@ -86,7 +86,7 @@ return count
 
 ### Complexity Analysis
 - **Prefix construction**: $O(n)$
-- **Evaluating all pairs $(L, R)$**: $O(n^2)$
+- **Evaluating all pairs `(L, R)`**: $O(n^2)$
 - **Total Time Complexity**: $O(n^2)$
 - **Space Complexity**: $O(n)$
 
@@ -94,42 +94,42 @@ return count
 
 # 4. Why O(n^2) Is Still Not Enough
 
-Constraints specify $n \le 3 \times 10^4$. An $O(n^2)$ approach requires approximately $(3 \times 10^4)^2 = 9 \times 10^8$ operations, exceeding typical execution limits and causing a **Time Limit Exceeded (TLE)**.
+Constraints specify `n <= 3 * 10^4`. An $O(n^2)$ approach requires approximately `(3 * 10^4)^2 = 9 * 10^8` operations, exceeding typical execution limits and causing a **Time Limit Exceeded (TLE)**.
 
 > [!IMPORTANT]
 > **Key Optimization Question:**
-> Can we process elements in a single pass ($R$) and determine algebraically what condition a previous prefix $L$ must satisfy to form a sum divisible by $k$?
+> Can we process elements in a single pass (`R`) and determine algebraically what condition a previous prefix `L` must satisfy to form a sum divisible by `k`?
 
 ---
 
 # 5. Deriving the O(n) Solution Algebraically
 
-Start with the target condition for a valid subarray ending at index $R$:
+Start with the target condition for a valid subarray ending at index `R`:
 
-$$(\text{prefix}[R + 1] - \text{prefix}[L]) \pmod k = 0$$
+`(prefix[R + 1] - prefix[L]) % k == 0`
 
 According to modular arithmetic congruence rules:
 
-$$A - B \equiv 0 \pmod k \iff A \equiv B \pmod k$$
+`A - B == 0 (mod k)` if and only if `A == B (mod k)`
 
 Therefore:
 
-$$\text{prefix}[R + 1] \pmod k = \text{prefix}[L] \pmod k$$
+`prefix[R + 1] % k == prefix[L] % k`
 
 ### Key Insight
 
-Two prefix sums $\text{prefix}[R + 1]$ and $\text{prefix}[L]$ produce a subarray sum divisible by $k$ **if and only if they yield the exact same remainder when divided by $k$**.
+Two prefix sums `prefix[R + 1]` and `prefix[L]` produce a subarray sum divisible by `k` **if and only if they yield the exact same remainder when divided by `k`**.
 
 ```text
 [------ prefix[L] (remainder r) ------][--- subarray sum (divisible by k) ---]
 [-------------------- prefix[R + 1] (remainder r) --------------------]
 ```
 
-When we subtract $\text{prefix}[L]$ from $\text{prefix}[R + 1]$, their identical remainders $r$ cancel out, leaving a range sum with a remainder of $0$ (a multiple of $k$).
+When we subtract `prefix[L]` from `prefix[R + 1]`, their identical remainders `r` cancel out, leaving a range sum with a remainder of `0` (a multiple of `k`).
 
-Thus, as we traverse the array at index $R$, we don't need to check every previous index $L$. We only need to ask:
+Thus, as we traverse the array at index `R`, we don't need to check every previous index `L`. We only need to ask:
 
-> *"How many previous prefix sums had the SAME remainder when divided by $k$ as my current prefix sum?"*
+> *"How many previous prefix sums had the SAME remainder when divided by `k` as my current prefix sum?"*
 
 ---
 
@@ -137,22 +137,21 @@ Thus, as we traverse the array at index $R$, we don't need to check every previo
 
 A crucial detail in this problem is handling arrays with negative integers.
 
-In standard mathematical modulo arithmetic:
-$$\text{remainder} \in [0, k - 1]$$
+In standard mathematical modulo arithmetic, remainders are in `[0, k - 1]`.
 
 However, in programming languages like C++, Java, JavaScript, and C#, the `%` operator returns a negative remainder when the dividend is negative. For example:
-$$-2 \% 5 = -2$$
+`-2 % 5 = -2`
 
-Mathematically, $-2 \equiv 3 \pmod 5$ (since $-2 = -1 \times 5 + 3$). If one prefix sum gives a remainder of $-2$ and another gives $3$, a standard equality check between remainder variables would fail even though their difference is divisible by $5$ ($3 - (-2) = 5$).
+Mathematically, `-2` is congruent to `3 (mod 5)` (since `-2 = -1 * 5 + 3`). If one prefix sum gives a remainder of `-2` and another gives `3`, a standard equality check between remainder variables would fail even though their difference is divisible by `5` (`3 - (-2) = 5`).
 
 ### Universal Remainder Normalization Formula
 
-To ensure remainders remain in $[0, k - 1]$ across all programming languages:
+To ensure remainders remain in `[0, k - 1]` across all programming languages:
 
-$$\text{rem} = ((\text{current\_sum} \pmod k) + k) \pmod k$$
+`rem = ((current_sum % k) + k) % k`
 
-*   **In languages like Python**, the `%` operator naturally returns remainders in $[0, k-1]$ for positive divisors $k$.
-*   **In languages like C++ / Java**, adding $k$ and taking `% k` normalizes any negative result into the non-negative range $[0, k - 1]$.
+*   **In languages like Python**, the `%` operator naturally returns remainders in `[0, k - 1]` for positive divisors `k`.
+*   **In languages like C++ / Java**, adding `k` and taking `% k` normalizes any negative result into the non-negative range `[0, k - 1]`.
 
 ---
 
@@ -163,17 +162,17 @@ As we iterate through `nums`, we compute the running prefix sum and its normaliz
 At each position, we need to know:
 - How many times has this normalized remainder `rem` appeared previously?
 
-Because $0 \le \text{rem} < k$, we can store remainder frequencies using:
+Because `0 <= rem < k`, we can store remainder frequencies using:
 1. A **frequency HashMap / Hash Table** (mapping `rem -> count`).
-2. Or a **direct array / lookup vector** of size $k$ (where index `r` stores the frequency of remainder `r`).
+2. Or a **direct array / lookup vector** of size `k` (where index `r` stores the frequency of remainder `r`).
 
 ---
 
 # 8. Base HashMap State — `freq[0] = 1`
 
-Before processing any elements (at imaginary index $-1$), the prefix sum is $0$, and $0 \pmod k = 0$.
+Before processing any elements (at imaginary index `-1`), the prefix sum is `0`, and `0 % k == 0`.
 
-Initializing remainder `0` with a frequency of `1` accounts for valid subarrays starting from index $0$ whose total sum is directly divisible by $k$.
+Initializing remainder `0` with a frequency of `1` accounts for valid subarrays starting from index `0` whose total sum is directly divisible by `k`.
 
 ### Example:
 `nums = [4, 5]`, `k = 5`
@@ -215,7 +214,7 @@ Return count
 
 ### Complexity Analysis
 - **Time Complexity**: $O(n)$, as we iterate through `nums` once and perform $O(1)$ lookup and insertion per element.
-- **Space Complexity**: $O(\min(n, k))$ when using a Hash Table, or $O(k)$ when using a fixed frequency array of size $k$.
+- **Space Complexity**: $O(\min(n, k))$ when using a Hash Table, or $O(k)$ when using a fixed frequency array of size `k`.
 
 ---
 
@@ -248,10 +247,10 @@ O(n) Time | O(k) Space Optimal Solution
 When solving subarray problems involving divisibility or remainders:
 
 1. **Transform range sums to prefix differences**:
-   $$\text{sum}(L \dots R) = \text{prefix}[R + 1] - \text{prefix}[L]$$
+   `sum(L...R) = prefix[R + 1] - prefix[L]`
 2. **Apply Modular Arithmetic**:
-   $$(\text{prefix}[R + 1] - \text{prefix}[L]) \equiv 0 \pmod k \implies \text{prefix}[R + 1] \equiv \text{prefix}[L] \pmod k$$
-3. **Normalize Remainders**: Ensure remainders are non-negative ($0 \le \text{rem} < k$) to make comparisons consistent across language implementations.
+   `(prefix[R + 1] - prefix[L]) % k == 0` implies `prefix[R + 1] % k == prefix[L] % k`
+3. **Normalize Remainders**: Ensure remainders are non-negative (`0 <= rem < k`) to make comparisons consistent across language implementations.
 4. **Use Remainder Frequencies**: Instead of storing indices, store the frequency of remainders encountered so far.
 
 ---
@@ -260,8 +259,8 @@ When solving subarray problems involving divisibility or remainders:
 
 | Feature | Subarray Sum Equals K | Subarray Sums Divisible by K |
 | :--- | :--- | :--- |
-| **Target Condition** | $\text{prefix}[R+1] - \text{prefix}[L] = k$ | $(\text{prefix}[R+1] - \text{prefix}[L]) \pmod k = 0$ |
-| **Algebraic Shift** | $\text{prefix}[L] = \text{current\_prefix} - k$ | $\text{prefix}[L] \pmod k = \text{current\_prefix} \pmod k$ |
+| **Target Condition** | `prefix[R + 1] - prefix[L] = k` | `(prefix[R + 1] - prefix[L]) % k == 0` |
+| **Algebraic Shift** | `prefix[L] = current_prefix - k` | `prefix[L] % k == current_prefix % k` |
 | **Map Key** | Prefix Sum Value | Normalized Remainder (`rem`) |
 | **Negative Handling** | Direct arithmetic | Remainder normalization `((rem % k) + k) % k` |
 
@@ -269,6 +268,6 @@ When solving subarray problems involving divisibility or remainders:
 
 # 13. Recognition Cues & Edge Cases
 
-*   **Keywords**: "contiguous subarray", "sum divisible by $k$", "multiple of $k$".
+*   **Keywords**: "contiguous subarray", "sum divisible by `k`", "multiple of `k`".
 *   **Negative Numbers**: Input elements can be negative. Always normalize remainders before looking up or updating frequencies.
-*   **Array vs. HashMap**: If $k$ is small (e.g., $k \le 10^4$), a fixed-size array/vector of length $k$ can be used instead of a hash table for faster execution and lower space overhead.
+*   **Array vs. HashMap**: If `k` is small (e.g., `k <= 10^4`), a fixed-size array/vector of length `k` can be used instead of a hash table for faster execution and lower space overhead.

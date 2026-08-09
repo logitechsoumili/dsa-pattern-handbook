@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Prefix Sum pattern is a fundamental algorithmic technique used to perform fast range sum queries on an array or sequence. By precomputing cumulative totals where each position $i$ stores the sum of all elements from index $0$ to $i$, range sum queries over any contiguous interval $[L, R]$ can be computed in constant $O(1)$ time rather than scanning all elements in $O(R - L + 1)$ time. 
+The Prefix Sum pattern is a fundamental algorithmic technique used to perform fast range sum queries on an array or sequence. By precomputing cumulative totals where each position $i$ stores the sum of all elements from index $0$ to $i$, range sum queries over any contiguous interval `[L, R]` can be computed in constant $O(1)$ time rather than scanning all elements in $O(R - L + 1)$ time. 
 
 When combined with HashMaps / Hash Tables, Prefix Sum allows us to solve complex subarray search, counting, and optimization problems (including arrays containing negative numbers) in linear $O(n)$ time.
 
@@ -22,14 +22,14 @@ Consider using the Prefix Sum pattern when:
 ## Core Concepts
 
 *   **Cumulative Sum Array:** A prefix array `prefix` of size $n + 1$ defined as:
-    $$\text{prefix}[0] = 0$$
-    $$\text{prefix}[i + 1] = \text{prefix}[i] + \text{nums}[i]$$
-*   **Constant Time Range Sum:** The sum of elements in contiguous subarray $\text{nums}[L \dots R]$ is computed instantly via difference:
-    $$\text{sum}(L \dots R) = \text{prefix}[R + 1] - \text{prefix}[L]$$
+    - `prefix[0] = 0`
+    - `prefix[i + 1] = prefix[i] + nums[i]`
+*   **Constant Time Range Sum:** The sum of elements in contiguous subarray `nums[L...R]` is computed instantly via difference:
+    - `sum(L...R) = prefix[R + 1] - prefix[L]`
 *   **Running Prefix Sum (Space Optimization):** When full range lookup is not required, we can maintain a single scalar variable `current_sum` during traversal, reducing auxiliary space from $O(n)$ to $O(1)$.
 *   **Prefix Sum + HashMap Equation Transformation:**
-    For target condition $\text{prefix}[R + 1] - \text{prefix}[L] = k$, fix current prefix at $R$ ($\text{current\_sum}$) and look up required previous prefix state:
-    $$\text{previous\_prefix} = \text{current\_sum} - k$$
+    For target condition `prefix[R + 1] - prefix[L] = k`, fix current prefix at $R$ (`current_sum`) and look up required previous prefix state:
+    - `previous_prefix = current_sum - k`
 *   **Frequency Map vs. First-Occurrence Map:**
     *   **Counting Subarrays:** Store **frequencies** of seen prefix states (e.g., `prefix_sum -> count`).
     *   **Maximizing Subarray Length:** Store the **earliest index** of each prefix state (e.g., `prefix_balance -> earliest_index`).
@@ -105,9 +105,9 @@ return max_len
 ## Common Variations
 
 1.  **Running Balance Transformation ($0 \to -1, 1 \to +1$):** Used for equal count problems by converting binary choices into $+1$ and $-1$ to search for zero-sum subarrays.
-2.  **Modulo Remainder Prefix Sum:** Used for divisibility constraints by storing normalized remainders $\text{rem} = ((\text{sum} \pmod k) + k) \pmod k$ in the lookup structure.
+2.  **Modulo Remainder Prefix Sum:** Used for divisibility constraints by storing normalized remainders `rem = ((sum % k) + k) % k` in the lookup structure.
 3.  **2D Prefix Sum (Matrix Range Queries):** Precomputing 2D cumulative region sums to answer subgrid sum queries in $O(1)$ time.
-4.  **Difference Array (Range Updates):** The dual of Prefix Sum, where range increments are recorded at boundaries $[L, R+1]$ and prefix summed at the end.
+4.  **Difference Array (Range Updates):** The dual of Prefix Sum, where range increments are recorded at boundaries `[L, R+1]` and prefix summed at the end.
 
 ---
 
@@ -128,9 +128,9 @@ return max_len
 
 | # | Problem | Key Lesson |
 | - | ------- | ---------- |
-| 1 | [Find Pivot Index](./01_find_pivot_index) ([Notes](./01_find_pivot_index/notes.md)) | Running prefix sum comparison ($\text{right} = \text{total} - \text{left} - \text{curr}$) achieves $O(1)$ space. |
-| 2 | [Subarray Sum Equals K](./02_subarray_sum_equals_k) ([Notes](./02_subarray_sum_equals_k/notes.md)) | Fix current prefix $R$, algebraically derive required previous prefix $\text{current} - k$, and lookup count via frequency HashMap. |
-| 3 | [Subarray Sums Divisible by K](./03_subarray_sums_divisible_by_k) ([Notes](./03_subarray_sums_divisible_by_k/notes.md)) | Equivalence of modulo remainders $\text{prefix}[R+1] \pmod k = \text{prefix}[L] \pmod k$. Normalize remainders to handle negative numbers. |
+| 1 | [Find Pivot Index](./01_find_pivot_index) ([Notes](./01_find_pivot_index/notes.md)) | Running prefix sum comparison (`right = total - left - current`) achieves $O(1)$ space. |
+| 2 | [Subarray Sum Equals K](./02_subarray_sum_equals_k) ([Notes](./02_subarray_sum_equals_k/notes.md)) | Fix current prefix $R$, algebraically derive required previous prefix `current_sum - k`, and lookup count via frequency HashMap. |
+| 3 | [Subarray Sums Divisible by K](./03_subarray_sums_divisible_by_k) ([Notes](./03_subarray_sums_divisible_by_k/notes.md)) | Equivalence of modulo remainders `prefix[R + 1] % k == prefix[L] % k`. Normalize remainders to handle negative numbers. |
 | 4 | [Contiguous Array](./04_contiguous_array) ([Notes](./04_contiguous_array/notes.md)) | Map $0 \to -1$ and $1 \to +1$ to transform equal count search to zero-sum subarray search. Store earliest index in HashMap to maximize length. |
 
 ---
